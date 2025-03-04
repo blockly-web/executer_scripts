@@ -1,0 +1,6 @@
+server {
+    listen 80;
+    server_name repo.yourdomain.com;
+    root /path/to/repo;
+    autoindex on;
+} 

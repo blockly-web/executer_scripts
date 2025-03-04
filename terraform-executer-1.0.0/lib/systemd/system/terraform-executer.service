@@ -1,0 +1,13 @@
+[Unit]
+Description=Terraform Executer HTTP API
+After=network.target
+
+[Service]
+Type=simple
+User=terraform-exec
+ExecStart=/usr/bin/terraform-executer
+Restart=on-failure
+WorkingDirectory=/var/lib/terraform-executer
+
+[Install]
+WantedBy=multi-user.target 

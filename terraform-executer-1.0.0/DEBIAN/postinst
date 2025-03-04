@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+# Create user for the service if it doesn't exist
+if ! getent passwd terraform-exec > /dev/null; then
+    useradd --system --no-create-home --shell /usr/sbin/nologin terraform-exec
+fi
+
+# Set up systemd service
+if [ -d /lib/systemd/system ]; then
+    systemctl daemon-reload
+    systemctl enable terraform-executer.service || true
+    systemctl start terraform-executer.service || true
+fi
+
+exit 0 

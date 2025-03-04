@@ -1,0 +1,7 @@
+Origin: Your Organization
+Label: Your Repository
+Codename: stable
+Architectures: all
+Components: main
+Description: Repository for Terraform Executer
+SignWith: yes 
