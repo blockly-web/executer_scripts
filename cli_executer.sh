@@ -44,7 +44,49 @@ handle_request() {
   echo "DEBUG: Finished header processing. Content-Length = $content_length" >&2
 
   response=""
-  if [[ "$path" == "/upload" && "$method" == "POST" ]]; then
+  if [[ "$path" =~ ^/upload\?(.+)$ ]]; then
+    # Extract query parameters
+    query_params="${BASH_REMATCH[1]}"
+    custom_filename=""
+    custom_path=""
+    
+    # Parse query parameters
+    IFS='&' read -ra PARAMS <<< "$query_params"
+    for param in "${PARAMS[@]}"; do
+      if [[ "$param" =~ ^filename=(.+)$ ]]; then
+        custom_filename="${BASH_REMATCH[1]}"
+      elif [[ "$param" =~ ^path=(.+)$ ]]; then
+        custom_path="${BASH_REMATCH[1]}"
+      fi
+    done
+
+    # --- File Upload ---
+    if (( content_length > 0 )); then
+      echo "DEBUG: Reading file body of $content_length bytes." >&2
+      body=$(dd bs=1 count="$content_length" 2>/dev/null)
+      echo "DEBUG: Body read (length $(echo -n "$body" | wc -c))" >&2
+      
+      # Use custom path and filename if provided
+      if [ -n "$custom_path" ]; then
+        target_dir="$TEMP_DIR/$custom_path"
+        mkdir -p "$target_dir"
+      else
+        target_dir="$TEMP_DIR"
+      fi
+
+      if [ -n "$custom_filename" ]; then
+        file="$target_dir/$custom_filename"
+      else
+        file=$(mktemp "$target_dir/upload_XXXXXX.tf")
+      fi
+
+      echo -n "$body" > "$file"
+      echo "DEBUG: File saved to '$file'" >&2
+      response="File uploaded successfully to $file"
+    else
+      response="No file content to upload"
+    fi
+  elif [[ "$path" == "/upload" && "$method" == "POST" ]]; then
     # --- File Upload ---
     if (( content_length > 0 )); then
       echo "DEBUG: Reading file body of $content_length bytes." >&2
@@ -86,7 +128,7 @@ handle_request() {
   echo "DEBUG: Response sent." >&2
 }
 
-# Export the function so that socat’s subprocess can access it.
+# Export the function so that socat's subprocess can access it.
 export -f handle_request
 
 echo "DEBUG: Starting socat server on port $PORT" >&2
