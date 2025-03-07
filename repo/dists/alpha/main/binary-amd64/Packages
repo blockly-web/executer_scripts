@@ -1,0 +1,14 @@
+Package: cli-executer
+Version: 1.0.0
+Architecture: all
+Depends: bash (>= 4.0), socat
+Maintainer: Addisu Alemu addisudalemu@gmail.com
+Priority: optional
+Section: utils
+Filename: pool/main/c/cli-executer/cli-executer_1.0.0_all.deb
+Size: 1630
+SHA256: e27b895e0db50ba80fe1ef2597df805943de85ed89ea2d1850f97f9d6cabcc9d
+SHA1: 3ea20c5f3c297611bbd6f808842a451ee694d739
+MD5sum: f1eb6adf9e364179e42e199ac433e676
+Description: CLI Executer HTTP API A simple HTTP server that allows uploading files and executing CLI commands via HTTP requests. 
+

@@ -1,0 +1,33 @@
+name: Upload to Firebase Storage
+
+on:
+  push:
+    branches:
+      - main  # Change this if you want a different branch to trigger the upload
+  workflow_dispatch:  # Adds manual trigger capability
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Authenticate with Firebase
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT" > firebase-service-account.json
+          firebase login --no-localhost --token "$(cat firebase-service-account.json | jq -r .private_key_id)"
+
+      - name: Deploy Files to Firebase Storage
+        run: firebase deploy --only storage

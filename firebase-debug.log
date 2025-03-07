@@ -1,0 +1,63 @@
+[debug] [2025-03-07T02:15:43.399Z] ----------------------------------------------------------------------
+[debug] [2025-03-07T02:15:43.400Z] Command:       /home/addisu/.nvm/versions/node/v18.18.1/bin/node /home/addisu/.nvm/versions/node/v18.18.1/bin/firebase deploy --only storage
+[debug] [2025-03-07T02:15:43.400Z] CLI Version:   13.29.2
+[debug] [2025-03-07T02:15:43.401Z] Platform:      linux
+[debug] [2025-03-07T02:15:43.401Z] Node Version:  v18.18.1
+[debug] [2025-03-07T02:15:43.401Z] Time:          Thu Mar 06 2025 21:15:43 GMT-0500 (Eastern Standard Time)
+[debug] [2025-03-07T02:15:43.401Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-03-07T02:15:43.499Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-03-07T02:15:43.500Z] > authorizing via signed-in user (addisudamena49@gmail.com)
+[debug] [2025-03-07T02:15:43.500Z] [iam] checking project blockly-web for permissions ["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2025-03-07T02:15:43.500Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:43.501Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:43.501Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/blockly-web:testIamPermissions [none]
+[debug] [2025-03-07T02:15:43.501Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/blockly-web:testIamPermissions x-goog-quota-user=projects/blockly-web
+[debug] [2025-03-07T02:15:43.501Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/blockly-web:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-03-07T02:15:44.243Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/blockly-web:testIamPermissions 200
+[debug] [2025-03-07T02:15:44.243Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/blockly-web:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[info] 
+[info] === Deploying to 'blockly-web'...
+[info] 
+[info] i  deploying storage 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2025-03-07T02:15:44.244Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:44.244Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:44.244Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/blockly-web/services/firebasestorage.googleapis.com [none]
+[debug] [2025-03-07T02:15:44.244Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/blockly-web/services/firebasestorage.googleapis.com x-goog-quota-user=projects/blockly-web
+[debug] [2025-03-07T02:15:44.676Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/blockly-web/services/firebasestorage.googleapis.com 200
+[debug] [2025-03-07T02:15:44.676Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/blockly-web/services/firebasestorage.googleapis.com [omitted]
+[info] ✔  storage: required API firebasestorage.googleapis.com is enabled 
+[debug] [2025-03-07T02:15:44.676Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:44.676Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:44.676Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/blockly-web/defaultBucket [none]
+[debug] [2025-03-07T02:15:45.378Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/blockly-web/defaultBucket 200
+[debug] [2025-03-07T02:15:45.378Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/blockly-web/defaultBucket {"name":"projects/blockly-web/defaultBucket","location":"US-CENTRAL1","bucket":{"name":"projects/blockly-web/buckets/blockly-web.firebasestorage.app"},"storageClass":"REGIONAL"}
+[info] i  firebase.storage: checking storage.rules for compilation errors... 
+[debug] [2025-03-07T02:15:45.379Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:45.379Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:45.379Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/blockly-web:test [none]
+[debug] [2025-03-07T02:15:45.379Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/blockly-web:test [omitted]
+[debug] [2025-03-07T02:15:45.711Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/blockly-web:test 200
+[debug] [2025-03-07T02:15:45.712Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/blockly-web:test {}
+[info] ✔  firebase.storage: rules file storage.rules compiled successfully 
+[debug] [2025-03-07T02:15:45.712Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:45.712Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:45.712Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/blockly-web/releases pageSize=10&pageToken=
+[debug] [2025-03-07T02:15:45.931Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/blockly-web/releases 200
+[debug] [2025-03-07T02:15:45.931Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/blockly-web/releases {"releases":[{"name":"projects/blockly-web/releases/cloud.firestore","rulesetName":"projects/blockly-web/rulesets/4da3aaea-50fe-422e-b002-dbb5cae3075a","createTime":"2023-12-09T02:04:45.116202Z","updateTime":"2023-12-09T02:04:45.116202Z"},{"name":"projects/blockly-web/releases/firebase.storage/blockly-web.firebasestorage.app","rulesetName":"projects/blockly-web/rulesets/8a53b611-2379-4852-a777-ae74370349bc","createTime":"2025-03-07T01:53:25.088170Z","updateTime":"2025-03-07T01:53:25.088170Z"}]}
+[debug] [2025-03-07T02:15:45.936Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:45.936Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:45.936Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/blockly-web/rulesets/8a53b611-2379-4852-a777-ae74370349bc [none]
+[debug] [2025-03-07T02:15:46.196Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/blockly-web/rulesets/8a53b611-2379-4852-a777-ae74370349bc 200
+[debug] [2025-03-07T02:15:46.196Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/blockly-web/rulesets/8a53b611-2379-4852-a777-ae74370349bc [omitted]
+[debug] [2025-03-07T02:15:46.197Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:46.197Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:46.197Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/blockly-web [none]
+[debug] [2025-03-07T02:15:46.437Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/blockly-web 200
+[debug] [2025-03-07T02:15:46.437Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/blockly-web {"projectNumber":"320113636163","projectId":"blockly-web","lifecycleState":"ACTIVE","name":"blockly-web","labels":{"firebase":"enabled"},"createTime":"2023-11-27T17:54:11.789738Z"}
+[debug] [2025-03-07T02:15:46.437Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:46.437Z] Checked if tokens are valid: true, expires at: 1741317062106
+[debug] [2025-03-07T02:15:46.437Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/320113636163:getIamPolicy [none]
+[debug] [2025-03-07T02:15:46.741Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/320113636163:getIamPolicy 200
+[debug] [2025-03-07T02:15:46.741Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/320113636163:getIamPolicy {"version":1,"etag":"BwYvtuNGn+0=","bindings":[{"role":"roles/cloudfunctions.developer","members":["serviceAccount:github-action-721844410@blockly-web.iam.gserviceaccount.com","serviceAccount:github-action-723901882@blockly-web.iam.gserviceaccount.com"]},{"role":"roles/editor","members":["serviceAccount:320113636163@cloudservices.gserviceaccount.com"]},{"role":"roles/firebase.managementServiceAgent","members":["serviceAccount:firebase-service-account@firebase-sa-management.iam.gserviceaccount.com","serviceAccount:service-320113636163@gcp-sa-firebase.iam.gserviceaccount.com"]},{"role":"roles/firebase.sdkAdminServiceAgent","members":["serviceAccount:firebase-adminsdk-fqtwx@blockly-web.iam.gserviceaccount.com"]},{"role":"roles/firebaseauth.admin","members":["serviceAccount:firebase-adminsdk-fqtwx@blockly-web.iam.gserviceaccount.com","serviceAccount:github-action-721844410@blockly-web.iam.gserviceaccount.com","serviceAccount:github-action-723901882@blockly-web.iam.gserviceaccount.com"]},{"role":"roles/firebasedatabase.admin","members":["serviceAccount:firebase-adminsdk-fqtwx@blockly-web.iam.gserviceaccount.com"]},{"role":"roles/firebasehosting.admin","members":["serviceAccount:github-action-721844410@blockly-web.iam.gserviceaccount.com","serviceAccount:github-action-723901882@blockly-web.iam.gserviceaccount.com"]},{"role":"roles/firebasemods.serviceAgent","members":["serviceAccount:service-320113636163@gcp-sa-firebasemods.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.system","members":["serviceAccount:service-320113636163@firebase-rules.iam.gserviceaccount.com"]},{"role":"roles/firebasestorage.serviceAgent","members":["serviceAccount:service-320113636163@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firestore.serviceAgent","members":["serviceAccount:service-320113636163@gcp-sa-firestore.iam.gserviceaccount.com"]},{"role":"roles/iam.serviceAccountTokenCreator","members":["serviceAccount:firebase-adminsdk-fqtwx@blockly-web.iam.gserviceaccount.com"]},{"role":"roles/owner","members":["user:addisudamena49@gmail.com"]},{"role":"roles/pubsub.serviceAgent","members":["serviceAccount:service-320113636163@gcp-sa-pubsub.iam.gserviceaccount.com"]},{"role":"roles/run.viewer","members":["serviceAccount:github-action-721844410@blockly-web.iam.gserviceaccount.com","serviceAccount:github-action-723901882@blockly-web.iam.gserviceaccount.com"]},{"role":"roles/serviceusage.apiKeysViewer","members":["serviceAccount:github-action-721844410@blockly-web.iam.gserviceaccount.com","serviceAccount:github-action-723901882@blockly-web.iam.gserviceaccount.com"]},{"role":"roles/serviceusage.serviceUsageConsumer","members":["serviceAccount:github-action-723901882@blockly-web.iam.gserviceaccount.com"]},{"role":"roles/storage.admin","members":["serviceAccount:firebase-adminsdk-fqtwx@blockly-web.iam.gserviceaccount.com"]}]}

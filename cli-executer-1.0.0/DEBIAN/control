@@ -1,0 +1,8 @@
+Package: cli-executer
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: bash (>= 4.0), socat
+Maintainer: Addisu Alemu addisudalemu@gmail.com
+Description: CLI Executer HTTP API A simple HTTP server that allows uploading files and executing CLI commands via HTTP requests. 

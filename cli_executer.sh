@@ -44,7 +44,7 @@ handle_request() {
   echo "DEBUG: Finished header processing. Content-Length = $content_length" >&2
 
   response=""
-  if [[ "$path" == "/terraform/file" && "$method" == "POST" ]]; then
+  if [[ "$path" == "/upload" && "$method" == "POST" ]]; then
     # --- File Upload ---
     if (( content_length > 0 )); then
       echo "DEBUG: Reading file body of $content_length bytes." >&2
@@ -58,7 +58,7 @@ handle_request() {
     else
       response="No file content to upload"
     fi
-   elif [[ "$path" == "/terraform/command" && "$method" == "PUT" ]]; then
+   elif [[ "$path" == "/command" && "$method" == "PUT" ]]; then
     # --- Command Execution ---
     if (( content_length > 0 )); then
       echo "DEBUG: Reading command body of $content_length bytes." >&2

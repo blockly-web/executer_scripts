@@ -1,7 +1,7 @@
-Origin: Your Organization
-Label: Your Repository
-Codename: stable
-Architectures: all
+Origin: Addisu Alemu
+Label: executer_scripts
+Codename: alpha
+Architectures: amd64 i386 arm64 armhf source
 Components: main
-Description: Repository for Terraform Executer
+Description: Repository for CLI Executer Scripts
 SignWith: yes 

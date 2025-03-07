@@ -1,0 +1,55 @@
+Origin: Addisu Alemu
+Label: executer_scripts
+Codename: alpha
+Date: Fri, 07 Mar 2025 01:50:52 UTC
+Architectures: amd64 i386 arm64 armhf
+Components: main
+Description: Repository for CLI Executer Scripts
+MD5Sum:
+ ba9459ca08ec3855725c22cd25c237d7 533 main/binary-amd64/Packages
+ 8da0ae70526094c00fdf5b2170bb7251 396 main/binary-amd64/Packages.gz
+ c2191f83e7e2ecb24a35a89c29d96791 130 main/binary-amd64/Release
+ ba9459ca08ec3855725c22cd25c237d7 533 main/binary-i386/Packages
+ 8da0ae70526094c00fdf5b2170bb7251 396 main/binary-i386/Packages.gz
+ 9e15d03c35aa3e7eec98f4ae34a7758a 129 main/binary-i386/Release
+ ba9459ca08ec3855725c22cd25c237d7 533 main/binary-arm64/Packages
+ 8da0ae70526094c00fdf5b2170bb7251 396 main/binary-arm64/Packages.gz
+ dc3792f81c589236d2966ea8c6191dd6 130 main/binary-arm64/Release
+ ba9459ca08ec3855725c22cd25c237d7 533 main/binary-armhf/Packages
+ 8da0ae70526094c00fdf5b2170bb7251 396 main/binary-armhf/Packages.gz
+ 94812133a38e2b892e7a6d7f8b111e22 130 main/binary-armhf/Release
+ d41d8cd98f00b204e9800998ecf8427e 0 main/source/Sources
+ 7029066c27ac6f5ef18d660d5741979a 20 main/source/Sources.gz
+ 59d96a8b9f0a60f43ff21fa879d34a53 131 main/source/Release
+SHA1:
+ 7cd80f8225a22665e5a94fb6699bf5899faa475a 533 main/binary-amd64/Packages
+ efed6b11a0e54b648cde65e0a2519fc2a1756d9e 396 main/binary-amd64/Packages.gz
+ 529044753324eea89c62ea96f823d1def76a92ee 130 main/binary-amd64/Release
+ 7cd80f8225a22665e5a94fb6699bf5899faa475a 533 main/binary-i386/Packages
+ efed6b11a0e54b648cde65e0a2519fc2a1756d9e 396 main/binary-i386/Packages.gz
+ 581b6b82584a611d41a7a1a877a3dce3df131774 129 main/binary-i386/Release
+ 7cd80f8225a22665e5a94fb6699bf5899faa475a 533 main/binary-arm64/Packages
+ efed6b11a0e54b648cde65e0a2519fc2a1756d9e 396 main/binary-arm64/Packages.gz
+ 65c05fab4d1b36920b6a113a28a64619bdc5e2fe 130 main/binary-arm64/Release
+ 7cd80f8225a22665e5a94fb6699bf5899faa475a 533 main/binary-armhf/Packages
+ efed6b11a0e54b648cde65e0a2519fc2a1756d9e 396 main/binary-armhf/Packages.gz
+ 1014cb42732b554195f1f967478d8fb1b1bd4d31 130 main/binary-armhf/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709 0 main/source/Sources
+ 46c6643f07aa7f6bfe7118de926b86defc5087c4 20 main/source/Sources.gz
+ 2450a9621acd0784a1fc6a6fd637ee3b35007938 131 main/source/Release
+SHA256:
+ 705260b69a84c0f476ceb655181da4e4b326a79976b667d9fd338b2fd13d5277 533 main/binary-amd64/Packages
+ 86fb2c314522aa4c3d0a6e9c167108144152d708ec1e5f4223a6456d076173a4 396 main/binary-amd64/Packages.gz
+ a261cfbb6c0ad335cd1248c944aa0d8c337ec7e0023e7132e39b7155d58803a7 130 main/binary-amd64/Release
+ 705260b69a84c0f476ceb655181da4e4b326a79976b667d9fd338b2fd13d5277 533 main/binary-i386/Packages
+ 86fb2c314522aa4c3d0a6e9c167108144152d708ec1e5f4223a6456d076173a4 396 main/binary-i386/Packages.gz
+ d59ce58102c73d9087a8045d5e0407c9c4a8859a2c13115064ba0875df420782 129 main/binary-i386/Release
+ 705260b69a84c0f476ceb655181da4e4b326a79976b667d9fd338b2fd13d5277 533 main/binary-arm64/Packages
+ 86fb2c314522aa4c3d0a6e9c167108144152d708ec1e5f4223a6456d076173a4 396 main/binary-arm64/Packages.gz
+ 5384896a5a8164f01eacdea93a9c6debe1834f4871c3d076b77ebbd59cd37600 130 main/binary-arm64/Release
+ 705260b69a84c0f476ceb655181da4e4b326a79976b667d9fd338b2fd13d5277 533 main/binary-armhf/Packages
+ 86fb2c314522aa4c3d0a6e9c167108144152d708ec1e5f4223a6456d076173a4 396 main/binary-armhf/Packages.gz
+ 8b93cc245ed50a0e9fa32d4a5f85b9e94fb2690bdbebcb84f33c930c173b259c 130 main/binary-armhf/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0 main/source/Sources
+ 59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2 20 main/source/Sources.gz
+ 55d8b1a091b56a28c70b82247fbcb9f37f7e493647230e68d55bf8f98205dd29 131 main/source/Release

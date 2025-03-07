@@ -1,0 +1,5 @@
+Component: main
+Origin: Addisu Alemu
+Label: executer_scripts
+Architecture: amd64
+Description: Repository for CLI Executer Scripts

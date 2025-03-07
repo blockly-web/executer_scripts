@@ -1,10 +1,10 @@
-Package: terraform-executer
+Package: cli-executer
 Version: 1.0.0
 Section: utils
 Priority: optional
 Architecture: all
 Depends: bash (>= 4.0), socat
-Maintainer: Your Name <your.email@example.com>
-Description: Terraform Execution HTTP API
- A simple HTTP server that allows uploading Terraform files
- and executing Terraform commands via HTTP requests. 
+Maintainer: Addisu Alemu <addisudalemu@gmail.com>
+Description: CLI Executer HTTP API
+ A simple HTTP server that allows uploading files
+ and executing CLI commands via HTTP requests. 

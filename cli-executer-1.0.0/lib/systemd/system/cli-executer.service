@@ -1,0 +1,13 @@
+[Unit]
+Description=CLI Executer HTTP API
+After=network.target
+
+[Service]
+Type=simple
+User=cli-exec
+ExecStart=/usr/bin/cli-executer
+Restart=on-failure
+WorkingDirectory=/var/lib/cli-executer
+
+[Install]
+WantedBy=multi-user.target 
