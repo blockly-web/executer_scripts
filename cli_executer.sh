@@ -28,20 +28,35 @@ handle_request() {
 
   # Process headers.
   content_length=0
+  content_type=""
+  boundary=""
   echo "DEBUG: Starting header processing." >&2
   while IFS= read -r header_line; do
     header_line="${header_line%%$'\r'}"
+    # echo "╞══════════════════════════════════════════════════════════════╡" >&2
+    # echo "'$header_line'" >&2
     if [ -z "$header_line" ]; then
-      echo "DEBUG: End of headers detected." >&2
+      # echo "DEBUG: End of headers detected." >&2
       break
     fi
-    echo "DEBUG: Header: '$header_line'" >&2
+    # echo "DEBUG: Header: '$header_line'" >&2
     if [[ "$header_line" =~ ^Content-Length:\ ([0-9]+) ]]; then
       content_length=${BASH_REMATCH[1]}
-      echo "DEBUG: Found Content-Length: $content_length" >&2
+      # echo "DEBUG: Found Content-Length: $content_length" >&2
+    elif [[ "$header_line" =~ ^Content-Type:\ (.*) ]]; then
+      content_type=${BASH_REMATCH[1]}
+      # echo "DEBUG: Found Content-Type: $content_type" >&2
+      # Extract boundary if present
+      if [[ "$content_type" =~ boundary=([^;]+) ]]; then
+        boundary=${BASH_REMATCH[1]}
+        echo "DEBUG: Found boundary: $boundary" >&2
+      fi
     fi
   done
   echo "DEBUG: Finished header processing. Content-Length = $content_length" >&2
+
+
+
 
   response=""
   if [[ "$path" =~ ^/upload\?(.+)$ ]]; then
@@ -62,9 +77,9 @@ handle_request() {
 
     # --- File Upload ---
     if (( content_length > 0 )); then
-      echo "DEBUG: Reading file body of $content_length bytes." >&2
+      # echo "DEBUG: Reading file body of $content_length bytes." >&2
       body=$(dd bs=1 count="$content_length" 2>/dev/null)
-      echo "DEBUG: Body read (length $(echo -n "$body" | wc -c))" >&2
+      # echo "DEBUG: Body read 1 (length $(echo -n "$body" | wc -c))" >&2
       
       # Use custom path and filename if provided
       if [ -n "$custom_path" ]; then
@@ -80,21 +95,91 @@ handle_request() {
         file=$(mktemp "$target_dir/upload_XXXXXX.tf")
       fi
 
-      echo -n "$body" > "$file"
+      # Process multipart form data if applicable
+      if [[ -n "$boundary" && "$content_type" == *"multipart/form-data"* ]]; then
+        echo "DEBUG: Processing multipart form data with boundary: $boundary" >&2
+        
+        # Extract content between boundaries using the actual boundary marker
+        boundary_pattern="--${boundary}"
+        
+        # Save the raw body for debugging
+        echo -n "$body" > "$file"mp.txt
+        
+        # Extract the file content between the first boundary and the closing boundary
+        # This preserves all content including any double newlines in the file
+        # step by step extract the file content
+        intermediate_value=$(echo -n "$body" | sed -n "/${boundary_pattern}/,/${boundary_pattern}--/p")
+        echo "DEBUG: Intermediate value: '$intermediate_value'" >&2
+
+        # remove the Content-Disposition header
+        intermediate_value=$(echo -n "$intermediate_value" | sed -e "1,/Content-Disposition/d")
+        echo "DEBUG: Intermediate value after removing Content-Disposition: '$intermediate_value'" >&2
+
+        # remove the closing boundary
+        intermediate_value=$(echo -n "$intermediate_value" | sed -e "/--${boundary}--/d")
+        echo "DEBUG: Intermediate value after removing closing boundary: '$intermediate_value'" >&2
+
+ 
+
+        file_content=$(echo -n "$body" | sed -n "/${boundary_pattern}/,/${boundary_pattern}--/p" | sed -e "1,/Content-Disposition/d" -e "/--${boundary}--/d" -e "1,/^\r$/d")
+        echo "DEBUG: Extracted file content: '$intermediate_value'" >&2
+
+
+        echo "DEBUG: Extracted file content length: $(echo -n "$file_content" | wc -c)" >&2
+        echo -n "$intermediate_value" > "$file"
+      else
+        echo "DEBUG: direct upload"
+        echo -n "$body" > "$file"
+      fi
+      
       echo "DEBUG: File saved to '$file'" >&2
       response="File uploaded successfully to $file"
     else
       response="No file content to upload"
     fi
   elif [[ "$path" == "/upload" && "$method" == "POST" ]]; then
-    # --- File Upload ---
+    # --- File Upload --- // This is the one working
+    echo "DEBUG: ~~~~~THIS SHOULD NOT BE HIT~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Path: '$path'" >&2
     if (( content_length > 0 )); then
       echo "DEBUG: Reading file body of $content_length bytes." >&2
       body=$(dd bs=1 count="$content_length" 2>/dev/null)
+      echo "DEBUG: Body: =========== 2'$body'" >&2
+      file_content=$(echo -n "$body" | awk -v RS="\r\n\r\n" 'NR==2 {print}' | sed -e 's/\r$//')
+      echo "DEBUG: File content: '$file_content'" >&2
       echo "DEBUG: Body read (length $(echo -n "$body" | wc -c))" >&2
+      
       # Save the body to a unique file (with .tf extension in this example).
       file=$(mktemp "$TEMP_DIR/upload_XXXXXX.tf")
-      echo -n "$body" > "$file"
+      
+      # Process multipart form data if applicable
+      if [[ -n "$boundary" && "$content_type" == *"multipart/form-data"* ]]; then
+        echo "DEBUG ewerwerewerwetwewe: Processing multipart form data with boundary: $boundary" >&2
+        
+        # Extract content between boundaries using the actual boundary marker
+        boundary_pattern="--${boundary}"
+        
+        # Save the raw body for debugging
+        echo -n "$body" > "$file"mp.txt
+        
+        # Extract the file content between the first boundary and the closing boundary
+        # This preserves all content including any double newlines in the file
+        echo "DEBUG: Body  ========== 3: '$body'" >&2
+        echo "DEBUG: Boundary pattern: '$boundary_pattern'" >&2
+        echo "DEBUG: Body length: $(echo -n "$body" | wc -c)" >&2
+        intermidiate_file=$(echo -n "$body" | sed -n "/${boundary_pattern}/,/${boundary_pattern}--/p")
+        echo "DEBUG: Intermidiate file: '$intermidiate_file'" >&2
+        echo "DEBUG: Intermidiate file length: $(echo -n "$intermidiate_file" | wc -c)" >&2
+        
+        file_content=$(echo -n "$body" | sed -n "/${boundary_pattern}/,/${boundary_pattern}--/p" | sed -e "1,/Content-Disposition/d" -e "/--${boundary}--/d" -e "1,/^\r$/d")
+        
+        echo "DEBUG: Extracted file content length: $(echo -n "$file_content" | wc -c)" >&2
+        echo -n "$file_content" > "$file"
+      else
+      
+        echo -n "$body" > "$file"mp.txt
+        echo -n "$body" > "$file"
+      fi
+      
       echo "DEBUG: File saved to '$file'" >&2
       response="File uploaded successfully to $file"
     else
