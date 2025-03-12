@@ -48,6 +48,8 @@ handle_request() {
   echo "DEBUG: Finished header processing. Content-Length = $content_length" >&2
   echo "DEBUG: about to process path '$path'" >&2
   response=""
+  status_code="200"
+  status_message="OK"
   #-- get file handler
   if [[ "$path" =~ ^/output\/(.+)$ ]]; then
     # Extract query parameters
@@ -136,11 +138,17 @@ handle_request() {
         intermediate_value=$(echo -n "$intermediate_value" | sed -e "/--${boundary}--/d")
         echo "DEBUG: Intermediate value after removing closing boundary: '$intermediate_value'" >&2
 
-        file_content=$(echo -n "$body" | sed -n "/${boundary_pattern}/,/${boundary_pattern}--/p" | sed -e "1,/Content-Disposition/d" -e "/--${boundary}--/d" -e "1,/^\r$/d")
+        # trim ending empty lines 
+        intermediate_value=$(echo -n "$intermediate_value" | sed -e "/^\r$/d")
+        echo "DEBUG: Intermediate value after removing ending empty lines: '$intermediate_value'" >&2
+
+
+        file_content=$(echo -n "$intermediate_value\n\ndafasd" | sed -n "/${boundary_pattern}/,/${boundary_pattern}--/p" | sed -e "1,/Content-Disposition/d" -e "/--${boundary}--/d" -e "1,/^\r$/d")
         echo "DEBUG: Extracted file content: '$intermediate_value'" >&2
 
         echo "DEBUG: Extracted file content length: $(echo -n "$file_content" | wc -c)" >&2
         echo -n "$intermediate_value" >"$file"
+        echo "" >>"$file"
       else
         echo "DEBUG: direct upload"
         echo -n "$body" >"$file"
@@ -199,17 +207,33 @@ handle_request() {
     else
       response="No file content to upload"
     fi
-  elif [[ "$path" == "/command" && "$method" == "PUT" ]]; then
+  elif [[ "$path" =~ ^/command\?(.*) && "$method" == "PUT" ]]; then
     # --- Command Execution ---
     if ((content_length > 0)); then
       echo "DEBUG: Reading command body of $content_length bytes." >&2
       cmd=$(dd bs=1 count="$content_length" 2>/dev/null)
       echo "DEBUG: Command read: '$cmd'" >&2
       # Change to the temp directory and execute the command.
-      output=$(cd "$TEMP_DIR" && eval "$cmd" 2>&1)
+      # Extract project type and name from the path
+      project_type=$(echo "$path" | grep -oP 'project-type=\K[^&]+')
+      project_name=$(echo "$path" | grep -oP 'project-name=\K[^&]+')
+      output=$(cd "$TEMP_DIR/$project_type/$project_name" && eval "$cmd" 2>&1)
       echo "DEBUG: Command output: '$output'" >&2
-      response="Command executed. Output:\n$output"
+      # make response error, if there is an error in output
+      if [[ "$output" == *"Error:"* || $? -ne 0 ]]; then
+        status_code="500"
+        status_message="Internal Server Error"
+        response="Command failed. Output:\n$output"
+        echo -n "$response"  > "$TEMP_DIR/$project_type/$project_name/error.html"
+      else
+        status_code="200"
+        status_message="OK"
+        response="Command executed. Output:\n$output"
+        echo -n "$response" > "$TEMP_DIR/$project_type/$project_name/status.html"
+      fi
     else
+      status_code="400"
+      status_message="Bad Request"
       response="No command provided in the request body"
     fi
   else
@@ -222,7 +246,7 @@ handle_request() {
   content_length_bytes=$(printf "%s" "$content" | wc -c)
   
   # Fix: Properly format the response headers with CRLF separators and add CORS headers
-  response_headers=$(printf "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS\r\nAccess-Control-Allow-Headers: Content-Type\r\n\r\n" "$content_type" "$content_length_bytes")
+  response_headers=$(printf "HTTP/1.1 %s %s\r\nContent-Type: %s\r\nContent-Length: %d\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS\r\nAccess-Control-Allow-Headers: Content-Type\r\n\r\n " "$status_code" "$status_message" "$content_type" "$content_length_bytes")
   
   # Send the response using printf to avoid extra newlines.
   printf "%s" "$response_headers"
