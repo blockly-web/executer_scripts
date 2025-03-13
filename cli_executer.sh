@@ -82,6 +82,8 @@ handle_request() {
       echo "DEBUG: Response Content Content-Type: '$content_type'" >&2
       echo "DEBUG: Response: '$response'" >&2
     else
+      status_code="404"
+      status_message="Not Found"
       response="File not found: $file_to_serve"
     fi
   # --- File Upload with custom path and filename ---
@@ -224,12 +226,12 @@ handle_request() {
         status_code="500"
         status_message="Internal Server Error"
         response="Command failed. Output:\n$output"
-        echo -n "$response"  > "$TEMP_DIR/$project_type/$project_name/error.html"
+        echo -n "$response"  > "$TEMP_DIR/$project_type/$project_name/index.html"
       else
         status_code="200"
         status_message="OK"
         response="Command executed. Output:\n$output"
-        echo -n "$response" > "$TEMP_DIR/$project_type/$project_name/status.html"
+        echo -n "$response" > "$TEMP_DIR/$project_type/$project_name/index.html"
       fi
     else
       status_code="400"
