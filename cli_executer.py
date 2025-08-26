@@ -212,9 +212,12 @@ class TempHTTPRequestHandler(BaseHTTPRequestHandler):
                 body,
                 cwd=work_dir,
                 shell=True,
-                text=True,
-                capture_output=True,
                 check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                universal_newlines=True,
+                timeout=300,
+                
             )
             output = completed.stdout + completed.stderr
             (work_dir / "index.html").write_text(output, encoding="utf-8")
